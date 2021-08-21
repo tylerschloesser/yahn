@@ -1,9 +1,4 @@
 .container {
-  --color-background: #f6f6ef;
-  --color-rank: #828282;
-  --color-host: #828282;
-  --color-sub: #828282;
-
   min-height: 100vh;
   padding: 0 0.5rem;
   display: flex;
@@ -11,9 +6,6 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: var(--color-background);
-
-  font-family: Verdana, Geneva, sans-serif;
 }
 
 .main {

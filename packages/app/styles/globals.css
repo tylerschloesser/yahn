@@ -1,9 +1,22 @@
+:root {
+  --color-background: #f6f6ef;
+  --color-rank: #828282;
+  --color-host: #828282;
+  --color-sub: #828282;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
+  /*
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+    */
+
+  font-family: Verdana, Geneva, sans-serif;
+
+  background-color: var(--color-background);
 }
 
 a {
