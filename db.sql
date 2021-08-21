@@ -29,4 +29,11 @@ CREATE TABLE lists (
 
 CREATE OR REPLACE VIEW topstories as select items.* from (SELECT unnest(item_ids) id from lists where type='topstories') as list join items on list.id = items.id;
 
-CREATE OR REPLACE FUNCTION comment_ids(parent_id integer) RETURNS TABLE(id integer) AS $func$ SELECT id FROM (select unnest(kids) id from items where id=$1) kids $func$ LANGUAGE sql;
+CREATE OR REPLACE FUNCTION comments(parent_id integer) RETURNS SETOF items as $func$ 
+WITH RECURSIVE recursive_query(id, child_id) AS (
+SELECT id, unnest(kids) child_id from items where id=$1
+UNION
+SELECT t.id, unnest(t.kids) from items t, recursive_query
+WHERE recursive_query.child_id = t.id
+) SELECT items.* FROM recursive_query join items on child_id=items.id
+$func$ LANGUAGE sql STABLE;
