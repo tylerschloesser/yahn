@@ -31,16 +31,12 @@ export interface ItemAttributes {
 
 export async function getServerSideProps() {
   const params = Object.entries({
-    type: 'eq.story',
-    dead: 'eq.false',
-    deleted: 'eq.false',
-    order: 'time.desc',
-    limit: '10',
+    limit: '30',
   })
     .map(([k, v]) => `${k}=${v}`)
     .join('&')
   const items: ItemAttributes[] = await fetch(
-    `http://localhost:3000/items?${params}`,
+    `http://localhost:3000/topstories?${params}`,
   ).then((res) => res.json())
   return { props: { items } }
 }
