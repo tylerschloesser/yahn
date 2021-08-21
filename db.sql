@@ -7,7 +7,7 @@ CREATE TABLE items (
 	id      integer PRIMARY KEY,
 	deleted boolean NOT NULL,
   type    item_type NOT NULL,
-  by      varchar(32) NOT NULL,
+  by      varchar(32),
   time    timestamp NOT NULL,
   text    text,
   dead    boolean NOT NULL,

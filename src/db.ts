@@ -16,7 +16,7 @@ export interface ItemAttributes {
   id: number
   deleted: boolean
   type: ItemType
-  by: string
+  by: string | null
   time: Date
   text: string | null
   dead: boolean
@@ -36,7 +36,7 @@ export class Item
   public id!: number
   public deleted!: boolean
   public type!: ItemType
-  public by!: string
+  public by!: string | null
   public time!: Date
   public text!: string | null
   public dead!: boolean
@@ -63,7 +63,6 @@ Item.init(
     },
     by: {
       type: new DataTypes.STRING(32),
-      allowNull: false,
     },
     time: {
       type: DataTypes.DATE,
