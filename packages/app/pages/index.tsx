@@ -27,6 +27,7 @@ export interface ItemAttributes {
   url: string | null
   score: number | null
   title: string | null
+  descendants: number | null
 }
 
 export async function getServerSideProps() {
@@ -51,6 +52,16 @@ const withHost = (item: ItemAttributes) => {
     host = new URL(item.url!).host.split('.').slice(-2).join('.')
   }
   return { ...item, host }
+}
+
+const commentsText = (item: ItemAttributes) => {
+  if ((item.descendants ?? 0) === 0) {
+    return 'discuss'
+  }
+  if (item.descendants === 1) {
+    return '1 comment'
+  }
+  return `${item.descendants} comments`
 }
 
 const Home: NextPage<HomeProps> = ({ items }) => {
@@ -96,11 +107,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                 </a>
                 {' | '}
                 <a href={`https://news.ycombinator.com/item?id=${item.id}`}>
-                  {item.kids?.length === 1
-                    ? '1 comment'
-                    : (item.kids?.length ?? 0) > 0
-                    ? `${item.kids!.length} comments`
-                    : 'discuss'}
+                  {commentsText(item)}
                 </a>
               </div>
             </div>
