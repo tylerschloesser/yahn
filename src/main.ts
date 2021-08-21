@@ -10,7 +10,7 @@ const app = firebase.initializeApp(firebaseConfig)
 
 const db = app.database()
 
-const sequelize = new Sequelize('postgresql://localhost:5432')
+const sequelize = new Sequelize('postgresql://localhost:5432/test')
 
 enum ItemType {
   Job = 'job',
@@ -52,7 +52,7 @@ class Item extends Model<ItemAttributes, ItemCreationAttributes> implements Item
 
 Item.init({
   id: {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
     primaryKey: true,
   },
   deleted: {
@@ -64,7 +64,7 @@ Item.init({
     allowNull: false,
   },
   by: {
-    type: DataTypes.STRING(32),
+    type: new DataTypes.STRING(32),
     allowNull: false,
   },
   time: {
@@ -80,20 +80,21 @@ Item.init({
     allowNull: false,
   },
   parent:  {
-    type: DataTypes.INTEGER.UNSIGNED,
+    type: DataTypes.INTEGER,
   },
   kids:  {
-    type: DataTypes.ARRAY(DataTypes.INTEGER.UNSIGNED),
+    type: new DataTypes.ARRAY(DataTypes.INTEGER),
   },
   url: {
-    type: DataTypes.STRING(128),
+    type: new DataTypes.STRING(128),
   },
   title: {
-    type: DataTypes.STRING(128),
+    type: new DataTypes.STRING(128),
   },
 },
   {
     tableName: 'items',
+    timestamps: false,
     sequelize,
   }
 )
@@ -107,11 +108,25 @@ interface HnUpdates {
   const ref = db.ref('/v0/updates')
   ref.on('value', snap => {
     const updates = <HnUpdates>snap.val()
-    console.log(updates)
+    // console.log(updates)
     const first = updates.items[0]
     if (first) {
-      db.ref(`/v0/item/${first}`).once('value', snap2 => {
-        console.log(snap2.val())
+      db.ref(`/v0/item/${first}`).once('value', async snap2 => {
+        const item: ItemAttributes = Object.assign(<Partial<ItemAttributes>>{
+          deleted: false,
+          dead: false,
+          url: null,
+          title: null,
+          kids: null,
+        }, snap2.val())
+        console.log('item', item)
+
+        try {
+          await Item.create(item)
+          console.log('inserted!')
+        } catch (error) {
+          console.error('failed to insert', error)
+        }
       })
     }
   })
