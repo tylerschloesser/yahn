@@ -15,7 +15,7 @@ CREATE TABLE items (
   /* TODO add poll */
   kids    integer[], /* TODO not null? */
   url     varchar(512), /* TODO not null? */
-  /* TODO add score */
+  score   integer,
   title   varchar(128) /* TODO not null? */
   /* TODO add parts */
   /* TODO add descendants */

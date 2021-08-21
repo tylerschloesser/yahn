@@ -26,6 +26,7 @@ interface HnUpdates {
           url: null,
           title: null,
           kids: null,
+          score: null,
         }, itemSnap.val())
 
         // TODO figure out why this is null?

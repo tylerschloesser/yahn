@@ -23,6 +23,7 @@ export interface ItemAttributes {
   parent: number | null
   kids: number[] | null
   url: string | null
+  score: number | null
   title: string | null
 }
 
@@ -39,6 +40,7 @@ export class Item extends Model<ItemAttributes, ItemCreationAttributes> implemen
   public parent!: number | null
   public kids!: number[] | null
   public url!: string | null
+  public score!: number | null
   public title!: string | null
 }
 
@@ -78,6 +80,9 @@ Item.init({
   },
   url: {
     type: new DataTypes.STRING(512),
+  },
+  score: {
+    type: DataTypes.INTEGER,
   },
   title: {
     type: new DataTypes.STRING(128),
