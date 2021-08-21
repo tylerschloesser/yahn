@@ -1,6 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import React, {Fragment} from 'react'
 import styles from '../styles/Home.module.css'
 
 // TODO move this to shared package
@@ -55,14 +56,15 @@ const Home: NextPage<HomeProps> = ({ items }) => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          {items.length} Items!
-        </h1>
-
-        {items.map(item => (
-          <div key={item.id}>
-            {`${item.title} (${item.by}) ${item.id}`}
-          </div>
+        {items.map((item, i) => (
+          <Fragment key={item.id}>
+            <div className={styles.storyNumber}>{i + 1}.</div>
+            <div className={styles.item} key={item.id}>
+              <div>
+                {`${item.title} (${item.by}) ${item.id}`}
+              </div>
+            </div>
+          </Fragment>
         ))}
       </main>
     </div>
