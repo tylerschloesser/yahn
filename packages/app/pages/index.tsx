@@ -71,7 +71,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
               <div>
                 <a href={item.url!}>{item.title}</a> <a className={styles.storyHost} href={`https://news.ycombinator.com/from?site=${item.host}`}>({item.host})</a>
               </div>
-              <div>
+              <div className={styles.storySub}>
                 {item.score !== null ? `${item.score} points` : '1 point'}
                 {' by '}
                 <a href={`https://news.ycombinator.com/user?id=${item.by}`}>{item.by}</a>

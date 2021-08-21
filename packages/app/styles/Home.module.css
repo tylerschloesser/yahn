@@ -35,6 +35,7 @@
 
 .storySub {
   color: var(--color-sub);
+  font-size: 7pt;
 }
 
 .footer {
