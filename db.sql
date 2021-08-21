@@ -27,4 +27,4 @@ CREATE TABLE lists (
   item_ids integer[] NOT NULL,
 );
 
-CREATE OR REPLACE VIEW topstories as SELECT unnest(item_ids) id from lists where type='topstories';
+CREATE OR REPLACE VIEW topstories as select items.* from (SELECT unnest(item_ids) id from lists where type='topstories') as list join items on list.id = items.id;
