@@ -72,10 +72,10 @@ const Story: NextPage<StoryProps> = ({ items }) => {
         {items
           .filter((item) => item.parent === storyId)
           .map((item) => (
-            <Fragment key={item.id}>
+            <div key={item.id}>
               <div>{item.by}</div>
-              <pre>{item.text}</pre>
-            </Fragment>
+              <pre className={styles.text}>{item.text}</pre>
+            </div>
           ))}
       </main>
     </div>

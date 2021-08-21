@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import React, { Fragment } from 'react'
 import styles from '../styles/Home.module.css'
+import Link from 'next/link'
 
 // TODO move this to shared package
 export enum ItemType {
@@ -106,9 +107,9 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                   {item.by}
                 </a>
                 {' | '}
-                <a href={`https://news.ycombinator.com/item?id=${item.id}`}>
-                  {commentsText(item)}
-                </a>
+                <Link href={`/story/${item.id}`}>
+                  <a>{commentsText(item)}</a>
+                </Link>
               </div>
             </div>
           </Fragment>

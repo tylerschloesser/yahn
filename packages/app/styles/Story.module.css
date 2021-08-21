@@ -1,0 +1,13 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.main {
+  flex-direction: column;
+  max-width: 1000px;
+}
+
+.text {
+  white-space: pre-wrap;
+}
