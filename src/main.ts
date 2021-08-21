@@ -119,6 +119,13 @@ interface HnUpdates {
           title: null,
           kids: null,
         }, itemSnap.val())
+
+        // TODO figure out why this is null?
+        if (item.by === null) {
+          console.log(`item.by is null? skipping`, item)
+          return
+        }
+
         try {
           await Item.upsert(item)
         } catch (error) {
