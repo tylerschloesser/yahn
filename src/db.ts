@@ -25,6 +25,7 @@ export interface ItemAttributes {
   url: string | null
   score: number | null
   title: string | null
+  descendants: number | null
 }
 
 export enum ListType {
@@ -82,6 +83,7 @@ export class Item
   public url!: string | null
   public score!: number | null
   public title!: string | null
+  public descendants!: number | null
 }
 
 Item.init(
@@ -126,6 +128,9 @@ Item.init(
     },
     title: {
       type: new DataTypes.STRING(128),
+    },
+    descendants: {
+      type: new DataTypes.INTEGER(),
     },
   },
   {

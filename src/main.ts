@@ -30,6 +30,7 @@ interface HnUpdates {
             kids: null,
             score: null,
             by: null,
+            descendants: null,
           },
           itemSnap.val(),
         )
