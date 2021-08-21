@@ -26,3 +26,5 @@ CREATE TABLE lists (
 	type     list_type PRIMARY KEY,
   item_ids integer[] NOT NULL,
 );
+
+CREATE OR REPLACE VIEW topstories as SELECT unnest(item_ids) id from lists where type='topstories';
