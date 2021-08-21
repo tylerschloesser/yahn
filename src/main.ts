@@ -1,5 +1,6 @@
 import firebase from 'firebase'
-import { Item, ItemAttributes } from './db'
+import { Item, ItemAttributes, List, ListType } from './db'
+import crypto from 'crypto'
 
 const firebaseConfig = {
   databaseURL: 'https://hacker-news.firebaseio.com',
@@ -43,4 +44,19 @@ interface HnUpdates {
   })
 }
 
-console.log('main')
+const md5 = (str: string) => crypto.createHash('md5').update(str).digest('hex')
+
+db.ref('/v0/topstories').on('value', async (topStoriesSnap) => {
+  const topStoryIds = <number[]>topStoriesSnap.val()
+  const hash = md5(JSON.stringify(topStoryIds))
+
+  try {
+    await List.upsert({
+      type: ListType.TopStories,
+      item_ids: topStoryIds,
+    })
+    console.log(`updated topstories (${hash})`)
+  } catch (error) {
+    console.log('failed to update topstories', error)
+  }
+})

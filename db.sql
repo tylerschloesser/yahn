@@ -20,3 +20,9 @@ CREATE TABLE items (
   /* TODO add parts */
   /* TODO add descendants */
 );
+
+CREATE TYPE list_type AS ENUM ('topstories');
+CREATE TABLE lists (
+	type     list_type PRIMARY KEY,
+  item_ids integer[] NOT NULL,
+);

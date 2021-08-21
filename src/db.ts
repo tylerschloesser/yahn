@@ -27,6 +27,43 @@ export interface ItemAttributes {
   title: string | null
 }
 
+export enum ListType {
+  TopStories = 'topstories',
+}
+
+export interface ListAttributes {
+  type: ListType
+  item_ids: number[]
+}
+
+export type ListCreationAttributes = ListAttributes
+
+export class List
+  extends Model<ListAttributes, ListCreationAttributes>
+  implements ListAttributes
+{
+  public type!: ListType
+  public item_ids!: number[]
+}
+
+List.init(
+  {
+    type: {
+      type: new DataTypes.ENUM('topstories'),
+      primaryKey: true,
+    },
+    item_ids: {
+      type: new DataTypes.ARRAY(DataTypes.INTEGER),
+      allowNull: false,
+    },
+  },
+  {
+    tableName: 'lists',
+    timestamps: false,
+    sequelize,
+  },
+)
+
 export type ItemCreationAttributes = ItemAttributes
 
 export class Item
