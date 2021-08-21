@@ -77,7 +77,7 @@ Item.init({
     type: new DataTypes.ARRAY(DataTypes.INTEGER),
   },
   url: {
-    type: new DataTypes.STRING(256),
+    type: new DataTypes.STRING(512),
   },
   title: {
     type: new DataTypes.STRING(128),

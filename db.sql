@@ -14,7 +14,7 @@ CREATE TABLE items (
   parent  integer, /* TODO not null? */
   /* TODO add poll */
   kids    integer[], /* TODO not null? */
-  url     varchar(256), /* TODO not null? */
+  url     varchar(512), /* TODO not null? */
   /* TODO add score */
   title   varchar(128) /* TODO not null? */
   /* TODO add parts */
