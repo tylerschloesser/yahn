@@ -23,9 +23,14 @@
   grid-template-columns: min-content 1fr;
 }
 
+.story {
+  padding-bottom: 4pt;
+}
+
 .storyRank {
   text-align: right;
   color: var(--color-rank);
+  padding-right: 4pt;
 }
 
 .storyHost {
@@ -36,6 +41,7 @@
 .storySub {
   color: var(--color-sub);
   font-size: 7pt;
+  padding-top: 2pt;
 }
 
 .footer {
