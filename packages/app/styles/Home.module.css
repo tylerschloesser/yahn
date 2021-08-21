@@ -1,6 +1,9 @@
 
 .container {
-  --background-color: #f6f6ef;
+  --color-background: #f6f6ef;
+  --color-rank: #828282;
+  --color-host: #828282;
+  --color-sub: #828282;
 
   min-height: 100vh;
   padding: 0 0.5rem;
@@ -9,7 +12,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: var(--background-color);
+  background-color: var(--color-background);
 
   font-family: Verdana, Geneva, sans-serif;
 }
@@ -20,8 +23,18 @@
   grid-template-columns: min-content 1fr;
 }
 
-.storyNumber {
+.storyRank {
   text-align: right;
+  color: var(--color-rank);
+}
+
+.storyHost {
+  color: var(--color-host);
+  font-size: 8pt;
+}
+
+.storySub {
+  color: var(--color-sub);
 }
 
 .footer {

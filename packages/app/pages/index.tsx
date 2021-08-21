@@ -66,10 +66,10 @@ const Home: NextPage<HomeProps> = ({ items }) => {
           .map(withHost)
           .map((item, i) => (
           <Fragment key={item.id}>
-            <div className={styles.storyNumber}>{i + 1}.</div>
+            <div className={styles.storyRank}>{i + 1}.</div>
             <div className={styles.item} key={item.id}>
               <div>
-                <a href={item.url!}>{item.title}</a> (<a href={`https://news.ycombinator.com/from?site=${item.host}`}>{item.host}</a>)
+                <a href={item.url!}>{item.title}</a> <a className={styles.storyHost} href={`https://news.ycombinator.com/from?site=${item.host}`}>({item.host})</a>
               </div>
               <div>
                 {item.score !== null ? `${item.score} points` : '1 point'}
