@@ -119,12 +119,10 @@ interface HnUpdates {
           title: null,
           kids: null,
         }, itemSnap.val())
-        //console.log('item', item)
         try {
           await Item.upsert(item)
-          console.log('inserted!', itemId)
         } catch (error) {
-          console.error('failed to insert', error)
+          console.error('failed to insert', item, error)
         }
       })
     }
