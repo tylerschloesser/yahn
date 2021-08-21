@@ -98,6 +98,14 @@ const Home: NextPage<HomeProps> = ({ items }) => {
                 <a href={`https://news.ycombinator.com/user?id=${item.by}`}>
                   {item.by}
                 </a>
+                {' | '}
+                <a href={`https://news.ycombinator.com/item?id=${item.id}`}>
+                  {item.kids?.length === 1
+                    ? '1 comment'
+                    : (item.kids?.length ?? 0) > 0
+                    ? `${item.kids!.length} comments`
+                    : 'discuss'}
+                </a>
               </div>
             </div>
           </Fragment>
