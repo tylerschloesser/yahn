@@ -73,6 +73,8 @@ const Home: NextPage<HomeProps> = ({ items }) => {
               </div>
               <div>
                 {item.score !== null ? `${item.score} points` : '1 point'}
+                {' by '}
+                <a href={`https://news.ycombinator.com/user?id=${item.by}`}>{item.by}</a>
               </div>
             </div>
           </Fragment>
