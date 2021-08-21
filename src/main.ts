@@ -27,10 +27,10 @@ interface ItemAttributes {
 
 type ItemCreationAttributes = ItemAttributes
 
-class Item extends Model<ItemAttributes, ItemCreationAttributes> implements ItemAttributes {
-  public id: number
-  public type: ItemType
-}
+// class Item extends Model<ItemAttributes, ItemCreationAttributes> implements ItemAttributes {
+//   public id: number
+//   public type: ItemType
+// }
 
 interface HnUpdates {
   items: number[]
