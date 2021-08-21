@@ -49,7 +49,7 @@ interface HomeProps {
 
 const withHost = (item: ItemAttributes) => {
   const { host } = new URL(item.url!)
-  return { ...item, host }
+  return { ...item, host: host.split('.').slice(-2).join('.') }
 }
 
 const Home: NextPage<HomeProps> = ({ items }) => {
