@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import React, {Fragment} from 'react'
+import React, { Fragment } from 'react'
 import styles from '../styles/Home.module.css'
 
 // TODO move this to shared package
@@ -31,15 +31,17 @@ export interface ItemAttributes {
 
 export async function getServerSideProps() {
   const params = Object.entries({
-    'type': 'eq.story',
-    'dead': 'eq.false',
-    'deleted': 'eq.false',
-    'order': 'time.desc',
-    'limit': '10',
-  }).map(([k, v]) => `${k}=${v}`)
+    type: 'eq.story',
+    dead: 'eq.false',
+    deleted: 'eq.false',
+    order: 'time.desc',
+    limit: '10',
+  })
+    .map(([k, v]) => `${k}=${v}`)
     .join('&')
-  const items: ItemAttributes[] = await fetch(`http://localhost:3000/items?${params}`)
-    .then(res => res.json())
+  const items: ItemAttributes[] = await fetch(
+    `http://localhost:3000/items?${params}`,
+  ).then((res) => res.json())
   return { props: { items } }
 }
 
@@ -65,25 +67,37 @@ const Home: NextPage<HomeProps> = ({ items }) => {
       </Head>
 
       <main className={styles.main}>
-        {items
-          .map(withHost)
-          .map((item, i) => (
+        {items.map(withHost).map((item, i) => (
           <Fragment key={item.id}>
             <div className={styles.storyRank}>{i + 1}.</div>
             <div className={styles.story} key={item.id}>
               <div>
-                <a href={item.url ?? `https://news.ycombinator.com/item?id=${item.id}`}>{item.title}</a>
-            {item.host && (<>
-            {' '}
-                <a className={styles.storyHost}
-                  href={`https://news.ycombinator.com/from?site=${item.host}`}>({item.host})</a>
-              </>
-            )}
+                <a
+                  href={
+                    item.url ??
+                    `https://news.ycombinator.com/item?id=${item.id}`
+                  }
+                >
+                  {item.title}
+                </a>
+                {item.host && (
+                  <>
+                    {' '}
+                    <a
+                      className={styles.storyHost}
+                      href={`https://news.ycombinator.com/from?site=${item.host}`}
+                    >
+                      ({item.host})
+                    </a>
+                  </>
+                )}
               </div>
               <div className={styles.storySub}>
                 {item.score !== null ? `${item.score} points` : '1 point'}
                 {' by '}
-                <a href={`https://news.ycombinator.com/user?id=${item.by}`}>{item.by}</a>
+                <a href={`https://news.ycombinator.com/user?id=${item.by}`}>
+                  {item.by}
+                </a>
               </div>
             </div>
           </Fragment>
