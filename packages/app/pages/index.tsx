@@ -25,6 +25,7 @@ export interface ItemAttributes {
   parent: number | null
   kids: number[] | null
   url: string | null
+  score: number | null
   title: string | null
 }
 
@@ -69,6 +70,9 @@ const Home: NextPage<HomeProps> = ({ items }) => {
             <div className={styles.item} key={item.id}>
               <div>
                 <a href={item.url!}>{item.title}</a> (<a href={`https://news.ycombinator.com/from?site=${item.host}`}>{item.host}</a>)
+              </div>
+              <div>
+                {item.score !== null ? `${item.score} points` : '1 point'}
               </div>
             </div>
           </Fragment>
