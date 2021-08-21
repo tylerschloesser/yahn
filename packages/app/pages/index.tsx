@@ -61,7 +61,7 @@ const Home: NextPage<HomeProps> = ({ items }) => {
             <div className={styles.storyNumber}>{i + 1}.</div>
             <div className={styles.item} key={item.id}>
               <div>
-                {`${item.title} (${item.by}) ${item.id}`}
+                <a href={item.url}>{item.title}</a>
               </div>
             </div>
           </Fragment>
