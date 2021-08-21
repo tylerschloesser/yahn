@@ -3,7 +3,41 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-const Home: NextPage = () => {
+// TODO move this to shared package
+export enum ItemType {
+  Job = 'job',
+  Story = 'story',
+  Comment = 'comment',
+  Poll = 'poll',
+  PollOpt = 'pollopt',
+}
+
+// TODO move this to shared package
+export interface ItemAttributes {
+  id: number
+  deleted: boolean
+  type: ItemType
+  by: string
+  time: Date
+  text: string | null
+  dead: boolean
+  parent: number | null
+  kids: number[] | null
+  url: string | null
+  title: string | null
+}
+
+export async function getServerSideProps() {
+  const items: ItemAttributes[] = await fetch('http://localhost:3000/items?type=eq.story')
+    .then(res => res.json())
+  return { props: { items } }
+}
+
+interface HomeProps {
+  items: ItemAttributes[]
+}
+
+const Home: NextPage<HomeProps> = ({ items }) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -14,7 +48,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!!!!</a>
+          {items.length} Items!
         </h1>
 
         <p className={styles.description}>
