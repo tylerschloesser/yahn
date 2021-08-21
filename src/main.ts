@@ -10,7 +10,9 @@ const app = firebase.initializeApp(firebaseConfig)
 
 const db = app.database()
 
-const sequelize = new Sequelize('postgresql://localhost:5432/test')
+const sequelize = new Sequelize('postgresql://localhost:5432/test', {
+  logging: false,
+})
 
 enum ItemType {
   Job = 'job',
@@ -26,7 +28,7 @@ interface ItemAttributes {
   type: ItemType
   by: string
   time: Date
-  text: string
+  text: string | null
   dead: boolean
   parent: number | null
   kids: number[] | null
@@ -42,7 +44,7 @@ class Item extends Model<ItemAttributes, ItemCreationAttributes> implements Item
   public type!: ItemType
   public by!: string
   public time!: Date
-  public text!: string
+  public text!: string | null
   public dead!: boolean
   public parent!: number | null
   public kids!: number[] | null
@@ -73,7 +75,6 @@ Item.init({
   },
   text: {
     type: DataTypes.TEXT,
-    allowNull: false,
   },
   dead: {
     type: DataTypes.BOOLEAN,
@@ -86,7 +87,7 @@ Item.init({
     type: new DataTypes.ARRAY(DataTypes.INTEGER),
   },
   url: {
-    type: new DataTypes.STRING(128),
+    type: new DataTypes.STRING(256),
   },
   title: {
     type: new DataTypes.STRING(128),
@@ -106,24 +107,22 @@ interface HnUpdates {
 
 {
   const ref = db.ref('/v0/updates')
-  ref.on('value', snap => {
-    const updates = <HnUpdates>snap.val()
-    // console.log(updates)
-    const first = updates.items[0]
-    if (first) {
-      db.ref(`/v0/item/${first}`).once('value', async snap2 => {
+  ref.on('value', updatesSnap => {
+    const updates = <HnUpdates>updatesSnap.val()
+    console.log(`fetching ${updates.items.length} items`)
+    for (const itemId of updates.items) {
+      db.ref(`/v0/item/${itemId}`).once('value', async itemSnap => {
         const item: ItemAttributes = Object.assign(<Partial<ItemAttributes>>{
           deleted: false,
           dead: false,
           url: null,
           title: null,
           kids: null,
-        }, snap2.val())
-        console.log('item', item)
-
+        }, itemSnap.val())
+        //console.log('item', item)
         try {
-          await Item.create(item)
-          console.log('inserted!')
+          await Item.upsert(item)
+          console.log('inserted!', itemId)
         } catch (error) {
           console.error('failed to insert', error)
         }
