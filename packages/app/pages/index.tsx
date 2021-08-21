@@ -46,6 +46,11 @@ interface HomeProps {
   items: ItemAttributes[]
 }
 
+const withHost = (item: ItemAttributes) => {
+  const { host } = new URL(item.url!)
+  return { ...item, host }
+}
+
 const Home: NextPage<HomeProps> = ({ items }) => {
   return (
     <div className={styles.container}>
@@ -56,12 +61,14 @@ const Home: NextPage<HomeProps> = ({ items }) => {
       </Head>
 
       <main className={styles.main}>
-        {items.map((item, i) => (
+        {items
+          .map(withHost)
+          .map((item, i) => (
           <Fragment key={item.id}>
             <div className={styles.storyNumber}>{i + 1}.</div>
             <div className={styles.item} key={item.id}>
               <div>
-                <a href={item.url!}>{item.title}</a>
+                <a href={item.url!}>{item.title}</a> (<a href={`https://news.ycombinator.com/from?site=${item.host}`}>{item.host}</a>)
               </div>
             </div>
           </Fragment>
