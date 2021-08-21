@@ -20,6 +20,10 @@
   grid-template-columns: min-content 1fr;
 }
 
+.storyNumber {
+  text-align: right;
+}
+
 .footer {
   width: 100%;
   height: 100px;
