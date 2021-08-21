@@ -28,3 +28,5 @@ CREATE TABLE lists (
 );
 
 CREATE OR REPLACE VIEW topstories as select items.* from (SELECT unnest(item_ids) id from lists where type='topstories') as list join items on list.id = items.id;
+
+CREATE OR REPLACE FUNCTION comment_ids(parent_id integer) RETURNS TABLE(id integer) AS $func$ SELECT id FROM (select unnest(kids) id from items where id=$1) kids $func$ LANGUAGE sql;
