@@ -48,8 +48,11 @@ interface HomeProps {
 }
 
 const withHost = (item: ItemAttributes) => {
-  const { host } = new URL(item.url!)
-  return { ...item, host: host.split('.').slice(-2).join('.') }
+  let host: string | null = null
+  if (item.url) {
+    host = new URL(item.url!).host.split('.').slice(-2).join('.')
+  }
+  return { ...item, host }
 }
 
 const Home: NextPage<HomeProps> = ({ items }) => {
@@ -69,7 +72,13 @@ const Home: NextPage<HomeProps> = ({ items }) => {
             <div className={styles.storyRank}>{i + 1}.</div>
             <div className={styles.story} key={item.id}>
               <div>
-                <a href={item.url!}>{item.title}</a> <a className={styles.storyHost} href={`https://news.ycombinator.com/from?site=${item.host}`}>({item.host})</a>
+                <a href={item.url ?? `https://news.ycombinator.com/item?id=${item.id}`}>{item.title}</a>
+            {item.host && (<>
+            {' '}
+                <a className={styles.storyHost}
+                  href={`https://news.ycombinator.com/from?site=${item.host}`}>({item.host})</a>
+              </>
+            )}
               </div>
               <div className={styles.storySub}>
                 {item.score !== null ? `${item.score} points` : '1 point'}
