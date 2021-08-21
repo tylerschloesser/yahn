@@ -11,12 +11,12 @@ CREATE TABLE items (
   time    timestamp NOT NULL,
   text    text NOT NULL,
   dead    boolean NOT NULL,
-  parent  integer,
+  parent  integer, /* TODO not null? */
   /* TODO add poll */
-  kids    integer[],
-  url     varchar(128),
+  kids    integer[], /* TODO not null? */
+  url     varchar(128), /* TODO not null? */
   /* TODO add score */
-  title   varchar(128)
+  title   varchar(128) /* TODO not null? */
   /* TODO add parts */
   /* TODO add descendants */
 );
